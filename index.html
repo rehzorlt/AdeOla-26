@@ -1,0 +1,618 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AdeOla 2026 | The Wedding</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Raleway:wght@300;400;600&display=swap" rel="stylesheet">
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+    <script src="https://js.paystack.co/v1/inline.js"></script>
+
+    <style>
+        /* --- 1. BRAND VARIABLES --- */
+        :root {
+            /* Updated per request */
+            --emerald-green: #084d28; /* Standard Green for accents */
+            --emerald-dark: #01261c;  /* NEW: Deep Black-Green for Dark Backgrounds */
+            --ivory-white: #FAF6EE;   /* NEW: Light Ivory for Light Backgrounds */
+            
+            --gold: #C59237;
+            --gold-foil: linear-gradient(45deg, #C59237, #F2C979, #C59237);
+            
+            --font-head: 'Cinzel', serif;
+            --font-sub: 'Cormorant Garamond', serif;
+            --font-body: 'Raleway', sans-serif;
+        }
+
+        /* --- 2. GLOBAL RESET & CONTRAST RULES --- */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            /* LIGHT BACKGROUND -> DARK TEXT */
+            background-color: var(--ivory-white);
+            color: var(--emerald-dark);
+            font-family: var(--font-body);
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+
+        h1, h2, h3 { font-family: var(--font-head); text-transform: uppercase; }
+
+        h2 {
+            color: var(--gold);
+            text-align: center;
+            margin-bottom: 2rem;
+            font-size: 2.5rem;
+            position: relative;
+            padding-bottom: 15px;
+        }
+        h2::after {
+            content: "❦"; display: block; font-size: 1.5rem; margin-top: 10px; color: var(--emerald-green);
+        }
+
+        img { max-width: 100%; display: block; }
+        a { text-decoration: none; color: inherit; transition: 0.3s; }
+        .gold-text { color: var(--gold); }
+
+        /* --- 3. BUTTONS --- */
+        .btn-gold {
+            background: var(--gold);
+            color: white; /* Button text always white/light */
+            padding: 15px 30px;
+            border: none;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-family: var(--font-head);
+            cursor: pointer;
+            transition: 0.3s;
+            display: inline-block;
+            margin-top: 10px;
+            border: 1px solid var(--gold);
+            font-weight: bold;
+        }
+        .btn-gold:hover { background: transparent; color: var(--gold); }
+
+        /* --- 4. NAVIGATION (Light BG -> Dark Text) --- */
+        nav {
+            position: fixed; top: 0; width: 100%;
+            background: rgba(250, 246, 238, 0.98); /* Ivory transparent */
+            padding: 15px 5%;
+            display: flex; justify-content: space-between; align-items: center;
+            z-index: 1000; box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        .nav-logo img { height: 50px; }
+        .nav-links { display: flex; gap: 20px; }
+        .nav-links a { 
+            font-family: var(--font-head); 
+            color: var(--emerald-dark); /* Dark text on Light Nav */
+            font-size: 0.9rem; font-weight: bold; 
+        }
+
+        /* --- 5. HERO (Dark Overlay -> Light Text) --- */
+        header {
+            height: 100vh;
+            /* Heavy Dark Overlay for Text Readability */
+            background: linear-gradient(rgba(1, 38, 28, 0.85), rgba(1, 38, 28, 0.9)), url('cover-image.jpg');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            display: flex; flex-direction: column;
+            justify-content: center; align-items: center;
+            text-align: center; color: var(--ivory-white); padding: 20px;
+        }
+        .hero-logo { width: 160px; margin-bottom: 20px; filter: drop-shadow(0 0 10px rgba(0,0,0,0.5)); }
+        .hero-names {
+            font-size: 3rem; margin-bottom: 10px;
+            background: var(--gold-foil); -webkit-background-clip: text; -webkit-text-fill-color: transparent; color: var(--gold);
+        }
+        .hero-subtitle { font-family: var(--font-sub); font-size: 1.5rem; font-style: italic; letter-spacing: 1px; color: var(--ivory-white); }
+        .hero-hashtag {
+            font-family: var(--font-body); letter-spacing: 5px;
+            border-top: 1px solid var(--gold); border-bottom: 1px solid var(--gold);
+            padding: 10px 20px; margin-top: 20px;
+            color: var(--ivory-white);
+        }
+
+        section { padding: 80px 10%; }
+
+        /* --- 6. TOAST (Light BG -> Dark Text) --- */
+        .toast-section { display: flex; flex-wrap: wrap; align-items: center; gap: 50px; }
+        .toast-img { flex: 1; min-width: 300px; border-radius: 100px 0 100px 0; overflow: hidden; box-shadow: 15px 15px 0px var(--gold); }
+        .toast-text { flex: 1; min-width: 300px; text-align: center; }
+        .toast-quote { 
+            font-family: var(--font-sub); font-size: 2.2rem; font-style: italic; 
+            color: var(--emerald-green); line-height: 1.4; 
+            /* Text is dark enough on ivory */
+        }
+
+        /* --- 7. EVENTS --- */
+        .schedule-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 40px; }
+        .event-card {
+            background: #fff; /* White Card */
+            padding: 25px; text-align: center;
+            border: 1px solid rgba(197, 146, 55, 0.3);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+            transition: transform 0.3s;
+            color: var(--emerald-dark); /* Dark text inside card */
+        }
+        .event-card:hover { transform: translateY(-5px); }
+        .event-img-header { height: 220px; width: 100%; object-fit: cover; margin-bottom: 20px; border-bottom: 4px solid var(--gold); }
+        .map-frame { width: 100%; height: 250px; border: 0; margin-top: 20px; filter: grayscale(100%); transition: 0.3s; }
+        .map-frame:hover { filter: grayscale(0%); }
+
+        /* --- 8. SLIDESHOW --- */
+        .slideshow-container {
+            max-width: 800px;
+            position: relative;
+            margin: auto;
+            border: 5px solid var(--gold);
+            box-shadow: 0 20px 50px rgba(0,0,0,0.2);
+        }
+        .mySlides { display: none; height: 500px; background: #000; }
+        .mySlides img { width: 100%; height: 100%; object-fit: cover; opacity: 0.9; }
+        .prev, .next {
+            cursor: pointer; position: absolute; top: 50%; width: auto; padding: 16px; margin-top: -22px;
+            color: white; font-weight: bold; font-size: 18px; transition: 0.6s ease;
+            background-color: rgba(0,0,0,0.3); user-select: none; text-decoration: none;
+        }
+        .next { right: 0; border-radius: 3px 0 0 3px; }
+        .prev { left: 0; border-radius: 0 3px 3px 0; }
+        .prev:hover, .next:hover { background-color: var(--gold); }
+        .dot-container { text-align: center; margin-top: 15px; }
+        .dot {
+            cursor: pointer; height: 10px; width: 10px; margin: 0 2px;
+            background-color: #bbb; border-radius: 50%; display: inline-block; transition: background-color 0.6s ease;
+        }
+        .active, .dot:hover { background-color: var(--gold); }
+        .fade { animation-name: fade; animation-duration: 1.5s; }
+        @keyframes fade { from {opacity: .4} to {opacity: 1} }
+
+        /* --- 9. GIFTS (Light BG Context) --- */
+        .gift-container { display: flex; flex-wrap: wrap; gap: 30px; justify-content: center; margin-top: 30px; }
+        .gift-box {
+            flex: 1; min-width: 300px; max-width: 450px;
+            background: white; /* Light BG */
+            padding: 40px;
+            border: 1px solid var(--gold); text-align: center;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            color: var(--emerald-dark); /* Dark text */
+        }
+        
+        /* INPUTS ON LIGHT BACKGROUND (Gift Section) */
+        .pay-input {
+            width: 100%; margin-bottom: 15px; padding: 15px;
+            border: 1px solid #ccc; font-family: var(--font-body); font-size: 1rem;
+            background-color: #fff;
+            color: var(--emerald-dark); /* Dark Text for input */
+        }
+        .pay-input::placeholder {
+            color: rgba(1, 38, 28, 0.6); /* Dark placeholder */
+        }
+
+        /* --- 10. RSVP (Dark BG Context) --- */
+        .rsvp-section { 
+            background-color: var(--emerald-dark); /* Dark BG */
+            color: var(--ivory-white); /* Light Text */
+            text-align: center; 
+        }
+        .rsvp-form { 
+            max-width: 600px; margin: 0 auto; 
+            background: rgba(255,255,255,0.05); 
+            padding: 40px; border: 1px solid var(--gold); text-align: left; 
+        }
+        .form-group { margin-bottom: 20px; }
+        label { display: block; margin-bottom: 8px; font-family: var(--font-head); color: var(--gold); }
+        
+        /* INPUTS ON DARK BACKGROUND (RSVP Section) */
+        .rsvp-form input, 
+        .rsvp-form select, 
+        .rsvp-form textarea { 
+            width: 100%; padding: 12px; 
+            background: transparent; 
+            border: 1px solid rgba(250, 246, 238, 0.4); /* Light border */
+            color: var(--ivory-white); /* LIGHT TEXT for Dark BG */
+            font-family: var(--font-body); 
+        }
+        /* Specific Placeholder Color for Dark Backgrounds */
+        .rsvp-form input::placeholder, 
+        .rsvp-form textarea::placeholder {
+            color: rgba(250, 246, 238, 0.6); /* Light Placeholder */
+        }
+        /* Fix Select dropdown options usually appearing white on browser */
+        .rsvp-form select option {
+            background-color: var(--emerald-dark);
+            color: var(--ivory-white);
+        }
+
+        .rsvp-form input:focus, .rsvp-form select:focus { outline: none; border-color: var(--gold); }
+        
+        .radio-group { display: flex; gap: 30px; margin-bottom: 20px; }
+        .radio-group label { color: var(--ivory-white); cursor: pointer; display: flex; align-items: center; gap: 8px;}
+
+        /* Ticket Design (Light Card) */
+        #access-card-container {
+            display: none;
+            max-width: 450px;
+            margin: 40px auto;
+            background: var(--ivory-white); /* Light BG */
+            color: var(--emerald-dark); /* Dark Text */
+            padding: 30px;
+            border: 4px double var(--gold);
+            text-align: center;
+            position: relative;
+        }
+        .card-top { border-bottom: 2px dashed var(--gold); padding-bottom: 15px; margin-bottom: 15px; }
+        .card-details { text-align: left; margin-bottom: 15px; font-size: 0.95rem; }
+        .card-row { display: flex; justify-content: space-between; margin-bottom: 8px; border-bottom: 1px solid rgba(0,0,0,0.1); padding-bottom: 5px;}
+        .access-badge {
+            background: var(--emerald-green); color: white; padding: 5px 15px;
+            font-family: var(--font-head); font-weight: bold; border-radius: 4px;
+            display: inline-block; margin-top: 5px;
+        }
+        .code-display { font-size: 2rem; letter-spacing: 3px; font-weight: bold; color: var(--gold); margin: 15px 0; font-family: var(--font-head); }
+
+        /* --- 11. FOOTER (Dark BG -> Light Text) --- */
+        footer {
+            background: var(--emerald-dark);
+            color: rgba(250, 246, 238, 0.7); /* Light Text */
+            text-align: center;
+            padding: 50px 10%;
+            border-top: 1px solid var(--gold);
+            display: flex; flex-direction: column; align-items: center; gap: 15px;
+        }
+        .rehzorlt-branding { display: flex; align-items: center; gap: 15px; justify-content: center; opacity: 0.8; }
+        .rehzorlt-branding:hover { opacity: 1; }
+        .rehzorlt-branding img { height: 35px; width: auto; }
+        .rehzorlt-branding p { font-size: 0.9rem; letter-spacing: 1px; color: var(--ivory-white); font-family: var(--font-head); margin-top: 5px;}
+
+        /* PRINT */
+        @media print {
+            body * { visibility: hidden; }
+            #access-card-container, #access-card-container * { visibility: visible; }
+            #access-card-container { position: absolute; left: 0; top: 0; width: 100%; border: 3px solid black; }
+            .btn-gold { display: none; }
+        }
+
+        /* MOBILE */
+        @media (max-width: 768px) {
+            .nav-links { display: none; }
+            .hero-names { font-size: 2.2rem; }
+            .toast-section { flex-direction: column; }
+            section { padding: 60px 5%; }
+            .mySlides { height: 300px; }
+        }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <a href="#" class="nav-logo"><img src="adeola-logo.png" alt="AdeOla Logo"></a>
+        <div class="nav-links">
+            <a href="#home">Home</a>
+            <a href="#schedule">Schedule</a>
+            <a href="#registry">Gifting</a>
+            <a href="#rsvp">RSVP</a>
+        </div>
+    </nav>
+
+    <header id="home">
+        <img src="adeola-logo.png" alt="Logo" class="hero-logo">
+        <h1 class="hero-names">Adedamola & Eniola</h1>
+        <p class="hero-subtitle">Invite you to celebrate their union</p>
+        <div class="hero-hashtag">#AdeOla2026</div>
+    </header>
+
+    <section id="toast" class="toast-section">
+        <div class="toast-img"><img src="toast-photo.jpg" alt="Couple Toasting"></div>
+        <div class="toast-text">
+            <h2 class="gold-text">Our Journey</h2>
+            <p class="toast-quote">“We deeply appreciate your love and support as we begin this journey together.”</p>
+        </div>
+    </section>
+
+    <section id="schedule">
+        <h2>Order of Events</h2>
+        <div class="schedule-grid">
+            <div class="event-card">
+                <img src="traditional-wedding.jpg" alt="Traditional" class="event-img-header">
+                <h3 class="event-title">Traditional Engagement</h3>
+                <p>Friday, Feb 13, 2026 — 12:00 PM</p>
+                <p style="font-size:0.9rem; margin-bottom:10px;">📍 Balogun Family Residence, Ikeja GRA</p>
+                <iframe class="map-frame" src="https://maps.google.com/maps?q=Ikeja+GRA+Lagos&t=&z=13&ie=UTF8&iwloc=&output=embed" loading="lazy"></iframe>
+            </div>
+
+            <div class="event-card">
+                <img src="church-wedding.jpg" alt="Church" class="event-img-header">
+                <h3 class="event-title">Solemnization</h3>
+                <p>Saturday, Feb 14, 2026 — 10:00 AM</p>
+                <p style="font-size:0.9rem; margin-bottom:10px;">📍 Catholic Church Of The Assumption, Falomo</p>
+                <iframe class="map-frame" src="https://maps.google.com/maps?q=Catholic+Church+of+the+Assumption+Falomo&t=&z=13&ie=UTF8&iwloc=&output=embed" loading="lazy"></iframe>
+            </div>
+
+            <div class="event-card">
+                <img src="reception-photo.jpg" alt="Reception" class="event-img-header">
+                <h3 class="event-title">Reception</h3>
+                <p>Saturday, Feb 14, 2026 — 03:00 PM</p>
+                <p style="font-size:0.9rem; margin-bottom:10px;">📍 The Grand Ballroom, Eko Hotel & Suites</p>
+                <iframe class="map-frame" src="https://maps.google.com/maps?q=Eko+Hotel+and+Suites&t=&z=13&ie=UTF8&iwloc=&output=embed" loading="lazy"></iframe>
+            </div>
+        </div>
+    </section>
+
+    <section class="scrolling-gallery">
+        <h2>Captured Moments</h2>
+        
+        <div class="slideshow-container">
+            <div class="mySlides fade">
+                <img src="gallery1.jpg">
+            </div>
+            <div class="mySlides fade">
+                <img src="gallery2.jpg">
+            </div>
+            <div class="mySlides fade">
+                <img src="gallery3.jpg">
+            </div>
+            <div class="mySlides fade">
+                <img src="gallery4.jpg">
+            </div>
+            <div class="mySlides fade">
+                <img src="gallery5.jpg">
+            </div>
+            <div class="mySlides fade">
+                <img src="gallery6.jpg">
+            </div>
+
+            <a class="prev" onclick="plusSlides(-1)">❮</a>
+            <a class="next" onclick="plusSlides(1)">❯</a>
+        </div>
+        
+        <div class="dot-container">
+            <span class="dot" onclick="currentSlide(1)"></span>
+            <span class="dot" onclick="currentSlide(2)"></span>
+            <span class="dot" onclick="currentSlide(3)"></span>
+            <span class="dot" onclick="currentSlide(4)"></span>
+            <span class="dot" onclick="currentSlide(5)"></span>
+            <span class="dot" onclick="currentSlide(6)"></span>
+        </div>
+    </section>
+    
+    <section id="registry">
+        <h2>Gifts & Support</h2>
+        <p style="text-align: center; margin-bottom: 30px; font-size: 1.1rem;">Your presence is the greatest gift. However, should you wish to honour us:</p>
+        
+        <div class="gift-container">
+            <div class="gift-box">
+                <h3 style="color: var(--emerald-green); margin-bottom: 10px;">Cash Gift</h3>
+                <p style="margin-bottom: 20px;">Support our future via Paystack</p>
+                
+                <form id="paymentForm" onsubmit="payWithPaystack(event)">
+                    <input type="email" id="email-address" class="pay-input" placeholder="Your Email Address" required>
+                    <input type="number" id="amount" class="pay-input" placeholder="Amount (NGN)" required>
+                    <button type="submit" class="btn-gold" style="width: 100%;">Donate Securely</button>
+                </form>
+            </div>
+
+            <div class="gift-box">
+                <h3 style="color: var(--emerald-green); margin-bottom: 10px;">Gift Registry</h3>
+                <p style="margin-bottom: 20px;">We have curated a wishlist of items.</p>
+                <div style="text-align: left; margin-top: 20px;">
+                    <a href="https://mywishlistng.com" target="_blank" style="display: block; margin-bottom: 15px; font-weight: bold; color: var(--gold); border-bottom: 1px solid #eee; padding-bottom: 10px;">🎁 Visit MyWishlistNG Registry →</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="rsvp" class="rsvp-section">
+        <h2>R.S.V.P & Access Pass</h2>
+        <p style="margin-bottom: 30px;">Access Card Required. Kindly confirm attendance by January 20th, 2026.</p>
+        
+        <form id="rsvpForm" class="rsvp-form">
+            <div class="form-group">
+                <label>Reservation Type:</label>
+                <div class="radio-group">
+                    <label><input type="radio" name="resType" value="individual" checked onclick="toggleGroupField(false)"> Individual</label>
+                    <label><input type="radio" name="resType" value="group" onclick="toggleGroupField(true)"> Group (Max 10)</label>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="name">Lead Guest Name / Group Name</label>
+                <input type="text" id="name" required placeholder="Enter name">
+            </div>
+
+            <div class="form-group" id="group-names-container" style="display:none;">
+                <label for="groupNames">Group Members (Names separated by comma)</label>
+                <textarea id="groupNames" rows="3" placeholder="e.g. John Doe, Jane Doe, ..."></textarea>
+                <small style="color: rgba(255,255,255,0.7);">Maximum 10 guests allowed.</small>
+            </div>
+
+            <div class="form-group">
+                <label for="inviter">Who invited you?</label>
+                <select id="inviter" required>
+                    <option value="">-- Select --</option>
+                    <option value="couple">Couple (Direct Invitation)</option>
+                    <option value="family">Bride or Groom's Family</option>
+                    <option value="friend">Friend / Well Wisher</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="phone">Phone Number</label>
+                <input type="tel" id="phone" required placeholder="080...">
+            </div>
+
+            <button type="submit" class="btn-gold" style="width: 100%;">Confirm & Generate Access</button>
+        </form>
+
+        <div id="access-card-container">
+            <div class="card-top">
+                <img src="adeola-logo.png" alt="Logo" style="width: 80px; margin: 0 auto;">
+                <h3 style="color: var(--emerald-green); margin-top:10px;">Official Access Pass</h3>
+            </div>
+            
+            <div class="card-details">
+                <div class="card-row">
+                    <span><strong>Guest / Group:</strong></span>
+                    <span id="ticket-name"></span>
+                </div>
+                <div class="card-row">
+                    <span><strong>Inviter:</strong></span>
+                    <span id="ticket-inviter"></span>
+                </div>
+                <div class="card-row">
+                    <span><strong>Allocation:</strong></span>
+                    <span id="ticket-allocation" style="color: var(--emerald-green); font-weight: bold;"></span>
+                </div>
+            </div>
+
+            <div style="margin: 20px 0;">
+                <p style="font-size: 0.8rem; text-transform: uppercase; color: #777;">Access Category</p>
+                <div id="ticket-category" class="access-badge">VIP</div>
+                <div id="ticket-code" class="code-display">C-1024</div>
+            </div>
+
+            <div id="qrcode" style="display: flex; justify-content: center; margin-bottom: 20px;"></div>
+            
+            <p style="font-size: 0.7rem; color: #555;">Please present this pass at the security checkpoint.</p>
+            <button onclick="window.print()" class="btn-gold" style="margin-top: 20px;">Download / Print PDF</button>
+        </div>
+    </section>
+
+    <footer>
+        <div class="rehzorlt-branding">
+            <p>© 2026 Rehzorlt</p>
+            <img src="rehzorlt-logo.png" alt="Rehzorlt" style="height: 30px; width: auto; opacity: 1;"> 
+        </div>
+        <p style="font-size: 0.8rem; color: rgba(255,255,255,0.4);">Designed with ❤ for AdeOla 2026</p>
+    </footer>
+
+    <script>
+        // --- SLIDESHOW LOGIC ---
+        let slideIndex = 1;
+        showSlides(slideIndex);
+
+        // Auto play (change image every 3 seconds)
+        setInterval(function() {
+            plusSlides(1);
+        }, 3000);
+
+        function plusSlides(n) {
+            showSlides(slideIndex += n);
+        }
+
+        function currentSlide(n) {
+            showSlides(slideIndex = n);
+        }
+
+        function showSlides(n) {
+            let i;
+            let slides = document.getElementsByClassName("mySlides");
+            let dots = document.getElementsByClassName("dot");
+            if (n > slides.length) {slideIndex = 1}    
+            if (n < 1) {slideIndex = slides.length}
+            for (i = 0; i < slides.length; i++) {
+                slides[i].style.display = "none";  
+            }
+            for (i = 0; i < dots.length; i++) {
+                dots[i].className = dots[i].className.replace(" active", "");
+            }
+            slides[slideIndex-1].style.display = "block";  
+            dots[slideIndex-1].className += " active";
+        }
+
+        // --- PAYSTACK LOGIC ---
+        function payWithPaystack(e) {
+            e.preventDefault();
+            const email = document.getElementById("email-address").value;
+            const amount = document.getElementById("amount").value;
+
+            if(!email || !amount) {
+                alert("Please enter email and amount");
+                return;
+            }
+
+            let handler = PaystackPop.setup({
+                // REPLACE THIS WITH YOUR LIVE KEY
+                key: 'pk_test_d3c5240502157140b95349275005089222687103', 
+                email: email,
+                amount: amount * 100, 
+                currency: 'NGN', 
+                ref: ''+Math.floor((Math.random() * 1000000000) + 1), 
+                onClose: function(){
+                    alert('Transaction cancelled.');
+                },
+                callback: function(response){
+                    alert('Payment complete! Reference: ' + response.reference);
+                }
+            });
+            handler.openIframe();
+        }
+
+        // --- RSVP LOGIC ---
+        function toggleGroupField(isGroup) {
+            const container = document.getElementById('group-names-container');
+            container.style.display = isGroup ? 'block' : 'none';
+        }
+
+        document.getElementById('rsvpForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            const name = document.getElementById('name').value;
+            const inviter = document.getElementById('inviter').value;
+            const resType = document.querySelector('input[name="resType"]:checked').value;
+            const groupNames = document.getElementById('groupNames').value;
+
+            if (resType === 'group') {
+                const count = groupNames.split(',').length;
+                if (count > 10) { alert("Group limit exceeded."); return; }
+                if (groupNames.trim() === "") { alert("List group members."); return; }
+            }
+
+            let category = "VIP";
+            let prefix = "C";
+            let inviterText = "Friend / Well Wisher";
+
+            if (inviter === 'couple') {
+                category = "SPECIAL GUEST"; prefix = "A"; inviterText = "The Couple";
+            } else if (inviter === 'family') {
+                category = "VVIP"; prefix = "B"; inviterText = "Family";
+            }
+
+            const randomNum = Math.floor(1000 + Math.random() * 9000); 
+            const finalCode = `${prefix}-${randomNum}`;
+
+            let allocation = "";
+            if (resType === 'group') {
+                const tableNum = Math.floor(1 + Math.random() * 20);
+                allocation = `Table ${tableNum}`;
+            } else {
+                const seatNum = Math.floor(1 + Math.random() * 100);
+                allocation = `Seat ${seatNum}`;
+            }
+
+            document.getElementById('ticket-name').innerText = name + (resType === 'group' ? ' (Group)' : '');
+            document.getElementById('ticket-inviter').innerText = inviterText;
+            document.getElementById('ticket-allocation').innerText = allocation;
+            document.getElementById('ticket-category').innerText = category;
+            document.getElementById('ticket-code').innerText = finalCode;
+
+            document.getElementById('qrcode').innerHTML = "";
+            new QRCode(document.getElementById("qrcode"), {
+                text: `${finalCode} | ${category} | ${name}`,
+                width: 120, height: 120,
+                colorDark : "#084d28", colorLight : "#ffffff",
+                correctLevel : QRCode.CorrectLevel.H
+            });
+
+            document.getElementById('rsvpForm').style.display = 'none';
+            const ticketDiv = document.getElementById('access-card-container');
+            ticketDiv.style.display = 'block';
+            ticketDiv.scrollIntoView({ behavior: 'smooth' });
+        });
+    </script>
+</body>
+</html>
