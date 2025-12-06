@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Gallery | AdeOla 2026</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600&family=Cormorant+Garamond:ital,wght@0,300;0,400;1,400&family=Raleway:wght@300;400;500&display=swap" rel="stylesheet">
+
+    <style>
+        /* --- COPY BRAND VARIABLES --- */
+        :root {
+            --emerald-green: #084d28; 
+            --emerald-dark: #01261c;  
+            --ivory-white: #FAF6EE;   
+            --gold: #C59237;
+            --font-head: 'Cinzel', serif;
+            --font-sub: 'Cormorant Garamond', serif;
+            --font-body: 'Raleway', sans-serif;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { background-color: var(--ivory-white); color: var(--emerald-dark); font-family: var(--font-body); }
+
+        /* HEADER */
+        header { text-align: center; padding: 30px 20px; border-bottom: 1px solid var(--gold); }
+        h1 { font-family: var(--font-head); color: var(--gold); margin-bottom: 10px; }
+        .back-link { font-size: 0.8rem; text-decoration: none; color: var(--emerald-green); border-bottom: 1px solid var(--emerald-green); }
+
+        /* SLIDESHOW */
+        .scrolling-gallery { padding: 40px 5%; }
+        .slideshow-container { max-width: 100%; position: relative; margin: auto; box-shadow: 0 10px 30px rgba(0,0,0,0.1); }
+        .mySlides { display: none; height: 500px; background: #000; }
+        .mySlides img { width: 100%; height: 100%; object-fit: cover; opacity: 0.95; }
+        
+        .prev, .next { cursor: pointer; position: absolute; top: 50%; width: auto; padding: 10px; margin-top: -22px; color: white; font-weight: bold; font-size: 18px; background-color: rgba(0,0,0,0.2); user-select: none; }
+        .next { right: 0; } .prev { left: 0; }
+        
+        .dot-container { text-align: center; margin-top: 10px; }
+        .dot { cursor: pointer; height: 8px; width: 8px; margin: 0 3px; background-color: #ddd; border-radius: 50%; display: inline-block; }
+        .active, .dot:hover { background-color: var(--gold); }
+        .fade { animation-name: fade; animation-duration: 2s; }
+        @keyframes fade { from {opacity: .5} to {opacity: 1} }
+
+        @media (max-width: 400px) {
+            .mySlides { height: 300px; }
+            h1 { font-size: 1.5rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>Our Gallery</h1>
+        <a href="index.html" class="back-link">← Back to Main Page</a>
+    </header>
+
+    <section class="scrolling-gallery">
+        <div class="slideshow-container">
+            <div class="mySlides fade"><img src="toast-photo.jpg"></div>
+            <div class="mySlides fade"><img src="gallery1.jpg"></div>
+            <div class="mySlides fade"><img src="gallery2.jpg"></div>
+            <div class="mySlides fade"><img src="gallery3.jpg"></div>
+            <div class="mySlides fade"><img src="gallery4.jpg"></div>
+            <div class="mySlides fade"><img src="gallery5.jpg"></div>
+            <div class="mySlides fade"><img src="gallery6.jpg"></div>
+
+            <a class="prev" onclick="plusSlides(-1)">❮</a>
+            <a class="next" onclick="plusSlides(1)">❯</a>
+        </div>
+
+        <div class="dot-container">
+            <span class="dot" onclick="currentSlide(1)"></span>
+            <span class="dot" onclick="currentSlide(2)"></span>
+            <span class="dot" onclick="currentSlide(3)"></span>
+            <span class="dot" onclick="currentSlide(4)"></span>
+            <span class="dot" onclick="currentSlide(5)"></span>
+            <span class="dot" onclick="currentSlide(6)"></span>
+            <span class="dot" onclick="currentSlide(7)"></span>
+        </div>
+    </section>
+
+    <script>
+        let slideIndex = 1; showSlides(slideIndex);
+        setInterval(function() { plusSlides(1); }, 3000);
+        function plusSlides(n) { showSlides(slideIndex += n); }
+        function currentSlide(n) { showSlides(slideIndex = n); }
+        function showSlides(n) {
+            let i; let slides = document.getElementsByClassName("mySlides"); let dots = document.getElementsByClassName("dot");
+            if (n > slides.length) {slideIndex = 1} if (n < 1) {slideIndex = slides.length}
+            for (i = 0; i < slides.length; i++) { slides[i].style.display = "none"; }
+            for (i = 0; i < dots.length; i++) { dots[i].className = dots[i].className.replace(" active", ""); }
+            slides[slideIndex-1].style.display = "block"; dots[slideIndex-1].className += " active";
+        }
+    </script>
+</body>
+</html>
