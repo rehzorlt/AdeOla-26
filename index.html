@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>AdeOla 2026 | The Union</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,400&family=Manrope:wght@200;300;400;500&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="style.css">
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+    <script src="https://js.paystack.co/v1/inline.js"></script>
+
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore-compat.js"></script>
+</head>
+<body class="loading">
+
+    <div id="preloader">
+        <img src="adeola-logo.png" alt="A|E" class="loader-logo">
+        <div class="loader-bar-container">
+            <div class="loader-bar" id="loader-bar"></div>
+        </div>
+    </div>
+
+    <nav id="navbar">
+        <a href="#" class="nav-logo"><img src="adeola-logo.png" alt="Logo"></a>
+        <div class="nav-links">
+            <a href="#schedule">Itinerary</a>
+            <a href="#memories">Memories</a>
+            <a href="#registry">Gifts</a>
+            <a href="#rsvp">RSVP</a>
+        </div>
+    </nav>
+
+    <header id="home">
+        <div class="hero-content reveal">
+            <span class="hero-tag">THE WEDDING OF</span>
+            <h1 class="hero-names">Adedamola & Eniola</h1>
+            <p class="hero-quote">“We deeply appreciate your love and support as we begin this new chapter together.”</p>
+            <a href="#rsvp" class="btn-luxury">Secure Access Pass</a>
+        </div>
+    </header>
+
+    <section id="schedule">
+        <span class="subtitle">TIMELINE OF EVENTS</span>
+        <h2>The Celebration</h2>
+        
+        <div class="events-container">
+            <div class="event-row reveal">
+                <div class="event-image">
+                    <img src="traditional-wedding.jpg" alt="Traditional Ceremony">
+                </div>
+                <div class="event-details">
+                    <h3>Traditional Engagement</h3>
+                    <div class="event-meta">Feb 13, 2026 • 12:00 PM</div>
+                    <p>Balogun Family Residence<br>Ikeja GRA, Lagos</p>
+                    <iframe class="map-embed" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3963.366627670732!2d3.353681474233777!3d6.600195693393526!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x103b9228fa2a3999%3A0xd7781469eb79b6!2sIkeja%20GRA%2C%20Ikeja!5e0!3m2!1sen!2sng!4v1700000000000!5m2!1sen!2sng" loading="lazy"></iframe>
+                </div>
+            </div>
+
+            <div class="event-row reverse reveal">
+                <div class="event-image">
+                    <img src="church-wedding.jpg" alt="Church Wedding">
+                </div>
+                <div class="event-details">
+                    <h3>Solemnization</h3>
+                    <div class="event-meta">Feb 14, 2026 • 10:00 AM</div>
+                    <p>Catholic Church Of The Assumption<br>Falomo, Ikoyi</p>
+                    <iframe class="map-embed" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3964.442969963733!2d3.414457374232371!3d6.465422493526227!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x103b8b370e7a2f13%3A0x6b7720952b27072!2sCatholic%20Church%20of%20the%20Assumption%2C%20Falomo!5e0!3m2!1sen!2sng!4v1700000000000!5m2!1sen!2sng" loading="lazy"></iframe>
+                </div>
+            </div>
+
+            <div class="event-row reveal">
+                <div class="event-image">
+                    <img src="reception-photo.jpg" alt="Reception Party">
+                </div>
+                <div class="event-details">
+                    <h3>Reception</h3>
+                    <div class="event-meta">Feb 14, 2026 • 03:00 PM</div>
+                    <p>The Grand Ballroom<br>Eko Hotel & Suites, VI</p>
+                    <iframe class="map-embed" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3964.694605963959!2d3.427612774232066!3d6.433252993557997!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x103bf5263665a0cb%3A0x94fdfb3263723329!2sEko%20Hotels%20%26%20Suites!5e0!3m2!1sen!2sng!4v1700000000000!5m2!1sen!2sng" loading="lazy"></iframe>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="memories">
+        <span class="subtitle">CAPTURED MOMENTS & WISHES</span>
+        <h2>Love & Light</h2>
+        
+        <div class="memories-layout">
+            <div class="gallery-wrapper reveal">
+                <div class="frame-5x4">
+                    <div class="frame-inner">
+                        <div class="mySlides fade"><img src="toast-photo.jpg"></div>
+                        <div class="mySlides fade"><img src="gallery1.jpg"></div>
+                        <div class="mySlides fade"><img src="gallery2.jpg"></div>
+                        <div class="mySlides fade"><img src="gallery3.jpg"></div>
+                        <div class="mySlides fade"><img src="gallery4.jpg"></div>
+                        <div class="mySlides fade"><img src="gallery5.jpg"></div>
+                        <div class="mySlides fade"><img src="gallery6.jpg"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="wishes-read-wrapper reveal">
+                <div class="feed-header">Guest Book</div>
+                <div id="wishes-feed-display">
+                    <p style="color: #889990; font-style: italic;">Loading love notes...</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="registry">
+        <span class="subtitle">HONOUR US</span>
+        <h2>Gifts & Registry</h2>
+        <div class="gift-wrapper reveal">
+            <div class="gift-panel">
+                <div class="gift-icon">₦</div>
+                <h3>Cash Gift</h3>
+                <p class="gift-desc">Secure transfer via Paystack</p>
+                <form id="paymentForm">
+                    <div class="input-group">
+                        <input type="email" id="pay-email" required placeholder=" ">
+                        <label>Your Email Address</label>
+                    </div>
+                    <div class="input-group">
+                        <input type="number" id="pay-amount" required placeholder=" ">
+                        <label>Amount (₦)</label>
+                    </div>
+                    <button type="submit" class="btn-luxury full-width">Proceed</button>
+                </form>
+            </div>
+            <div class="gift-panel">
+                <div class="gift-icon">🎁</div>
+                <h3>Gift Registry</h3>
+                <p class="gift-desc">We have curated a selection of items.</p>
+                <a href="https://mywishlistng.com" target="_blank" class="btn-luxury full-width" style="text-align:center; text-decoration:none; display:block;">Visit Registry</a>
+            </div>
+        </div>
+    </section>
+
+    <section id="rsvp" class="rsvp-section">
+        <span class="subtitle">SECURE YOUR SEAT</span>
+        <h2>R.S.V.P</h2>
+        
+        <div class="rsvp-layout reveal">
+            <div class="rsvp-form-container">
+                <p class="rsvp-intro">Access Card Required. Kindly confirm before Jan 20th.</p>
+                
+                <form id="rsvpForm">
+                    <div class="input-group">
+                        <select id="resType" required>
+                            <option value="individual">Individual Booking</option>
+                            <option value="group">Group Booking</option>
+                        </select>
+                        <label>Reservation Type</label>
+                    </div>
+
+                    <div class="input-group">
+                        <input type="text" id="name" required placeholder=" ">
+                        <label>Full Name / Group Lead</label>
+                    </div>
+
+                    <div class="input-group">
+                        <input type="email" id="email" required placeholder=" ">
+                        <label>Email Address</label>
+                    </div>
+
+                    <div class="input-group" id="plus-one-select">
+                        <select id="plusOneCheck">
+                            <option value="no">Coming Alone</option>
+                            <option value="yes">Bringing a Plus One</option>
+                        </select>
+                        <label>Guest Option</label>
+                    </div>
+                    <div class="input-group hidden" id="plus-one-name-box">
+                        <input type="text" id="plusOneName" placeholder=" ">
+                        <label>Partner's Name</label>
+                    </div>
+                    <div class="input-group hidden" id="group-names-box">
+                        <textarea id="groupNames" rows="2" placeholder=" "></textarea>
+                        <label>List Guest Names (Comma separated)</label>
+                    </div>
+
+                    <div class="input-group">
+                        <select id="inviter" required>
+                            <option value="" disabled selected></option>
+                            <option value="couple">The Couple</option>
+                            <option value="bride_family">Bride’s Family</option>
+                            <option value="groom_family">Groom’s Family</option>
+                        </select>
+                        <label>Who invited you?</label>
+                    </div>
+
+                    <div class="input-group">
+                        <input type="tel" id="phone" required placeholder=" ">
+                        <label>Phone Number</label>
+                    </div>
+
+                    <div class="form-divider"><span>OPTIONAL</span></div>
+                    
+                    <div class="input-group">
+                        <textarea id="optionalWish" rows="3" placeholder=" "></textarea>
+                        <label>Name & Well Wishes (Displayed in Memories)</label>
+                    </div>
+
+                    <button type="submit" class="btn-luxury full-width">Confirm & Generate Pass</button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <img src="rehzorlt-logo.png" class="footer-logo" alt="Rehzorlt">
+        <div class="copyright">© 2026 REHZORLT. ALL RIGHTS RESERVED.</div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Access Pass</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600&family=Manrope:wght@300;600&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+    <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
+
+    <style>
+        :root { --dark: #021a12; --gold: #D4AF37; --white: #fff; }
+        body { background: #05140e; display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 100vh; font-family: 'Manrope', sans-serif; padding: 20px; color: #fff; margin: 0; }
+        
+        .ticket-container { width: 100%; max-width: 360px; padding: 10px; }
+        .pass-card { background: #fff; border-radius: 4px; overflow: hidden; position: relative; box-shadow: 0 30px 60px rgba(0,0,0,0.6); }
+        
+        .pass-header {
+            background: var(--dark); padding: 30px; text-align: center; color: var(--gold);
+            border-bottom: 2px dashed var(--gold);
+        }
+        .pass-header h1 { font-family: 'Cinzel', serif; font-size: 1.8rem; margin: 0; }
+        .pass-header p { font-size: 0.7rem; letter-spacing: 4px; text-transform: uppercase; color: #fff; margin-top: 5px; opacity: 0.8; }
+
+        .pass-body { padding: 30px; color: var(--dark); }
+        .info-row { display: flex; justify-content: space-between; margin-bottom: 12px; font-size: 0.85rem; border-bottom: 1px solid #eee; padding-bottom: 8px; }
+        .info-label { color: #888; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 1px; }
+        .info-val { font-weight: 600; text-align: right; }
+
+        .pass-footer { text-align: center; margin-top: 25px; }
+        .code-display { font-size: 2.2rem; color: var(--gold); font-weight: 700; letter-spacing: 3px; margin-bottom: 15px; font-family: 'Cinzel', serif; }
+        #qrcode { display: flex; justify-content: center; margin-bottom: 15px; }
+        
+        .btn-action {
+            margin-top: 30px; padding: 15px; width: 100%; max-width: 360px;
+            background: var(--gold); border: 1px solid var(--gold);
+            color: var(--dark); font-weight: 600; cursor: pointer; display: flex; justify-content: center; gap: 10px;
+            text-transform: uppercase; letter-spacing: 1px; font-size: 0.8rem; transition: 0.3s;
+        }
+        .btn-action:hover { background: transparent; color: var(--gold); }
+        .btn-back { margin-top: 20px; color: rgba(255,255,255,0.5); font-size: 0.7rem; text-decoration: none; text-transform: uppercase; letter-spacing: 2px; }
+    </style>
+</head>
+<body>
+
+    <div class="ticket-container" id="capture">
+        <div class="pass-card">
+            <div class="pass-header">
+                <h1>Access Pass</h1>
+                <p>AdeOla 2026</p>
+            </div>
+            <div class="pass-body">
+                <div class="info-row"><span class="info-label">Guest Name</span><span class="info-val" id="t-name"></span></div>
+                <div class="info-row"><span class="info-label">Total Guests</span><span class="info-val" id="t-count"></span></div>
+                <div class="info-row"><span class="info-label">Allocation</span><span class="info-val" id="t-alloc"></span></div>
+                <div class="info-row"><span class="info-label">Category</span><span class="info-val" id="t-cat"></span></div>
+                <div class="info-row"><span class="info-label">Invited By</span><span class="info-val" id="t-inviter"></span></div>
+                
+                <div class="pass-footer">
+                    <div class="code-display" id="t-code"></div>
+                    <div id="qrcode"></div>
+                    <small style="color:#aaa; font-size:0.65rem; letter-spacing:1px;">SCAN AT ENTRY</small>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <button class="btn-action" onclick="downloadPass()"><span>⬇</span> Download Pass</button>
+    <a href="index.html" class="btn-back">Return to Website</a>
+
+    <script>
+        const data = JSON.parse(localStorage.getItem('adeolaTicket'));
+        if(!data) window.location.href = 'index.html';
+
+        document.getElementById('t-name').innerText = data.name;
+        document.getElementById('t-count').innerText = data.count;
+        document.getElementById('t-alloc').innerText = data.alloc;
+        document.getElementById('t-cat').innerText = data.cat;
+        document.getElementById('t-inviter').innerText = data.inviter;
+        document.getElementById('t-code').innerText = data.code;
+
+        new QRCode(document.getElementById("qrcode"), {
+            text: `${data.code}|${data.name}|${data.count}|${data.cat}`,
+            width: 120, height: 120, colorDark : "#021a12", colorLight : "#ffffff", correctLevel: QRCode.CorrectLevel.H
+        });
+
+        function downloadPass() {
+            const btn = document.querySelector('.btn-action');
+            btn.innerText = "Processing...";
+            html2canvas(document.getElementById('capture'), { scale: 3, backgroundColor: null }).then(canvas => {
+                const link = document.createElement('a');
+                link.download = 'AdeOla-Pass.png';
+                link.href = canvas.toDataURL("image/png");
+                link.click();
+                btn.innerText = "Saved!";
+            });
+        }
+    </script>
+</body>
+</html>
