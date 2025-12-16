@@ -57,7 +57,7 @@
                 <div class="event-details">
                     <h3>Traditional Engagement</h3>
                     <div class="event-meta">Feb 13, 2026 • 12:00 PM</div>
-                    <p>Balogun Family Residence<br>Ikeja GRA, Lagos</p>
+                    <p>Ikeja GRA, Lagos</p>
                     <iframe class="map-embed" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3963.366627670732!2d3.353681474233777!3d6.600195693393526!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x103b9228fa2a3999%3A0xd7781469eb79b6!2sIkeja%20GRA%2C%20Ikeja!5e0!3m2!1sen!2sng!4v1700000000000!5m2!1sen!2sng" loading="lazy"></iframe>
                 </div>
             </div>
@@ -69,7 +69,7 @@
                 <div class="event-details">
                     <h3>Solemnization</h3>
                     <div class="event-meta">Feb 14, 2026 • 10:00 AM</div>
-                    <p>Catholic Church Of The Assumption<br>Falomo, Ikoyi</p>
+                    <p>Catholic Church Of The Assumption, Falomo</p>
                     <iframe class="map-embed" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3964.442969963733!2d3.414457374232371!3d6.465422493526227!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x103b8b370e7a2f13%3A0x6b7720952b27072!2sCatholic%20Church%20of%20the%20Assumption%2C%20Falomo!5e0!3m2!1sen!2sng!4v1700000000000!5m2!1sen!2sng" loading="lazy"></iframe>
                 </div>
             </div>
@@ -81,7 +81,7 @@
                 <div class="event-details">
                     <h3>Reception</h3>
                     <div class="event-meta">Feb 14, 2026 • 03:00 PM</div>
-                    <p>The Grand Ballroom<br>Eko Hotel & Suites, VI</p>
+                    <p>The Grand Ballroom, Eko Hotel & Suites</p>
                     <iframe class="map-embed" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3964.694605963959!2d3.427612774232066!3d6.433252993557997!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x103bf5263665a0cb%3A0x94fdfb3263723329!2sEko%20Hotels%20%26%20Suites!5e0!3m2!1sen!2sng!4v1700000000000!5m2!1sen!2sng" loading="lazy"></iframe>
                 </div>
             </div>
@@ -222,5 +222,28 @@
     </footer>
 
     <script src="script.js"></script>
+
+    <script>
+        // This script is separate from script.js to ensure it runs immediately
+        document.addEventListener("DOMContentLoaded", function() {
+            // Fill bar
+            const bar = document.getElementById("loader-bar");
+            if(bar) bar.style.width = "100%";
+
+            // Force hide after 2.5 seconds max
+            setTimeout(function() {
+                const loader = document.getElementById("preloader");
+                if(loader) {
+                    loader.style.opacity = "0";
+                    loader.style.visibility = "hidden";
+                    document.body.classList.remove("loading");
+                    
+                    // Manually trigger hero animation
+                    const hero = document.querySelector(".hero-content");
+                    if(hero) hero.classList.add("active");
+                }
+            }, 2500);
+        });
+    </script>
 </body>
 </html>
