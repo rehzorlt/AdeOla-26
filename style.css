@@ -29,6 +29,13 @@ body {
     -webkit-font-smoothing: antialiased;
 }
 
+/* Global Image Safety */
+img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+}
+
 /* =========================================
    3. PRELOADER
    ========================================= */
@@ -49,7 +56,6 @@ body.loading { overflow: hidden; }
 h1, h2, h3 { font-family: var(--font-display); font-weight: 400; text-transform: uppercase; letter-spacing: 2px; }
 
 h2 { 
-    /* Responsive sizing: min 1.8rem, ideal 4vw, max 3rem */
     font-size: clamp(1.8rem, 4vw, 3rem); 
     color: var(--gold); margin-bottom: 0.5rem; text-align: center; 
 }
@@ -71,7 +77,6 @@ section {
 
 .reveal { opacity: 0; transform: translateY(30px); transition: all 1s ease-out; }
 .reveal.active { opacity: 1; transform: translateY(0); }
-.hidden { display: none; }
 
 /* Buttons */
 .btn-luxury {
@@ -137,7 +142,7 @@ header {
 .event-row.reverse { flex-direction: row-reverse; }
 
 .event-image { flex: 1; height: 400px; overflow: hidden; border: 1px solid var(--border-light); }
-.event-image img { height: 100%; object-fit: cover; transition: transform 0.5s; }
+.event-image img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s; }
 .event-row:hover .event-image img { transform: scale(1.05); }
 
 .event-details { flex: 1; padding: 20px; }
@@ -187,14 +192,13 @@ header {
     width: 100%; padding: 12px 0; background: transparent; border: none;
     border-bottom: 1px solid rgba(255,255,255,0.2); color: #fff;
     font-family: var(--font-sans); font-size: 1rem; outline: none; transition: 0.3s;
-    border-radius: 0; /* Remove iOS default styles */
+    border-radius: 0;
 }
 .input-group input:focus, .input-group select:focus, .input-group textarea:focus { border-bottom-color: var(--gold); }
 .input-group label {
     position: absolute; top: 12px; left: 0; font-size: 0.85rem; color: var(--text-muted);
     pointer-events: none; transition: 0.3s;
 }
-/* Label Float Logic */
 .input-group input:focus ~ label, .input-group input:not(:placeholder-shown) ~ label,
 .input-group textarea:focus ~ label, .input-group textarea:not(:placeholder-shown) ~ label,
 .input-group select:focus ~ label, .input-group select:valid ~ label {
@@ -223,56 +227,58 @@ footer { padding: 50px 8%; text-align: center; border-top: 1px solid var(--borde
 @keyframes slideUp { from {transform: translateY(20px); opacity:0} to {transform: translateY(0); opacity:1} }
 
 /* =============================================================
-   14. MOBILE OPTIMIZATION (STRICT & CLEAN)
+   14. MOBILE OPTIMIZATION (Auto-Fit & Scaling)
    ============================================================= */
-@media (max-width: 768px) {
+@media (max-width: 900px) {
     
-    /* 1. Reset Global Spacing */
-    section { padding: 60px 20px; } /* Much tighter padding */
+    /* 1. Reset Global Spacing: Tighter for small screens */
+    section { padding: 60px 20px; }
     
-    /* 2. Navigation */
-    .nav-links { display: none; } /* Hide links on mobile */
-    nav { justify-content: center; padding: 15px; } /* Center logo */
+    /* 2. Navigation: Clean Logo */
+    .nav-links { display: none; }
+    nav { justify-content: center; padding: 15px; }
     
-    /* 3. Hero Section */
-    header { 
-        background-attachment: scroll; /* Fixes mobile parallax jitter */
-        padding: 0 15px; 
-    }
-    .hero-names { 
-        font-size: 2.8rem; /* Smaller names */
-        margin-bottom: 10px; 
-    }
-    .hero-quote { 
-        font-size: 0.95rem; 
-        line-height: 1.5;
-        margin: 20px auto 30px auto; 
-    }
-    .hero-tag { font-size: 0.6rem; letter-spacing: 3px; }
+    /* 3. Hero Section: Fix Header size */
+    header { background-attachment: scroll; padding: 0 15px; }
+    .hero-names { font-size: 2.8rem; margin-bottom: 10px; }
+    .hero-quote { font-size: 0.95rem; max-width: 90%; margin: 20px auto 30px auto; }
 
-    /* 4. Events (Force Vertical Stack) */
+    /* 4. Events: Pictures Auto-Scale */
     .events-container { gap: 50px; }
     .event-row, .event-row.reverse { 
         flex-direction: column; 
         gap: 15px; 
         text-align: center; 
     }
+    
+    /* AUTO FIT LOGIC: Use Aspect Ratio, not Fixed Height */
     .event-image { 
         width: 100%; 
-        height: 250px; /* Reduced height for mobile */
+        height: auto; /* Allow image to scale naturally */
+        aspect-ratio: 4/3; /* Standard photo shape (not too tall, not too thin) */
         border: none; 
     }
+    
+    /* Ensure image fills the aspect ratio box cleanly */
+    .event-image img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
     .event-details { padding: 0; }
     .event-details h3 { font-size: 1.6rem; margin-top: 10px; }
-    .map-embed { height: 180px; margin-top: 15px; }
+    .map-embed { height: 180px; margin-top: 15px; width: 100%; }
 
-    /* 5. Memories & Wishes */
+    /* 5. Memories: Gallery Auto-Fit */
     .memories-layout { grid-template-columns: 1fr; gap: 40px; }
+    
     .frame-5x4 { 
         width: 100%; 
-        max-width: 320px; /* Constrain width */
+        max-width: 100%; /* Use full width of phone */
         border-width: 5px; 
     }
+    
     .wishes-read-wrapper { 
         border-left: none; 
         border-top: 1px solid var(--gold); 
@@ -284,20 +290,20 @@ footer { padding: 50px 8%; text-align: center; border-top: 1px solid var(--borde
     .feed-header { font-size: 1.2rem; }
     .wish-msg { font-size: 1.1rem; }
 
-    /* 6. Gifts */
+    /* 6. Gifts: Stacked */
     .gift-wrapper { grid-template-columns: 1fr; gap: 30px; }
     .gift-panel { padding: 30px 20px; }
 
-    /* 7. RSVP Form */
+    /* 7. RSVP Form: Compact */
     .rsvp-form-container { padding: 30px 20px; }
     .rsvp-intro { margin-bottom: 30px; }
     
-    /* 8. Fix Input Zoom on iPhone */
+    /* 8. Input Zoom Fix for iPhone */
     .input-group input, 
     .input-group select, 
     .input-group textarea { font-size: 16px; }
 
-    /* 9. General Headers */
+    /* 9. General Font Scaling */
     h2 { font-size: 1.8rem; margin-bottom: 0.5rem; }
     .subtitle { margin-bottom: 30px; font-size: 0.65rem; }
     
